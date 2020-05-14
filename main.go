@@ -30,6 +30,7 @@ func init() {
   prometheus.MustRegister(NewNodesCollector())     // from nodes.go
   prometheus.MustRegister(NewCPUsCollector())      // from cpus.go
   prometheus.MustRegister(NewGPUsCollector())      // from gpus.go
+  prometheus.MustRegister(NewGresGPUCollector())   // from gres.go
 }
 
 var listenAddress = flag.String(
