@@ -49,11 +49,11 @@ func ParseGresGPUMetrics(input []byte) *GresGPUMetrics {
 	lines := strings.Split(string(input), "\n")
 	for _, line := range lines {
 		splitted := strings.Fields(line)
-		if len(splitted) != 4 {
+		if len(splitted) != 3 {
 			continue
 		}
 		// We only care about jobs that requested a GPU
-		if !strings.Contains(splitted[3], "gres/gpu") {
+		if !strings.Contains(splitted[2], "gres/gpu") {
 			continue
 		}
 		state := splitted[1]
@@ -90,7 +90,7 @@ func ParseGresGPUMetrics(input []byte) *GresGPUMetrics {
 
 // Execute the squeue command and return its output
 func GresGPUData() []byte {
-	cmd := exec.Command("squeue", "-a", "-r", "-h", "--Format=jobid,state,reason,tres-alloc:90", "--states=all")
+	cmd := exec.Command("squeue", "-a", "-r", "-h", "--Format=jobid,state,tres-alloc:90", "--states=all")
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		log.Fatal(err)
